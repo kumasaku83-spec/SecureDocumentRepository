@@ -55,11 +55,6 @@ SDR (Secure Document Repository) は、Web Crypto API と IndexedDB
 -   ライトモード
 -   レスポンシブデザイン
 
-## 🚀 Quick Start
-
-``` bash
-git clone https://github.com/yourname/SDR.git
-```
 
 ブラウザで `SDR.html` を開くだけで利用できます。
 
