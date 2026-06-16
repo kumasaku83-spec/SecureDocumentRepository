@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>セキュア・ドキュメント・レポジトリ (SDR) v1.06</title>
+    <title>セキュア・ドキュメント・レポジトリ (SDR) v2.02</title>
 <style>
 /* ==========================================================================
-   SDR Improved - スタイルシート v1.05 (視認性向上版)
+   SDR Improved - スタイルシート v2.02 (マルチリポジトリ対応版)
    ========================================================================== */
 :root {
     /* ダークテーマ (デフォルト) - よりコントラストを高く */
@@ -85,12 +85,39 @@ body { background-color: var(--bg-primary); color: var(--text-primary); font-fam
 .alert-icon { color: var(--accent-cyan); flex-shrink: 0; }
 
 .auth-container { display: flex; align-items: center; justify-content: center; height: 100vh; width: 100vw; background: var(--bg-auth); position: relative; z-index: 10; transition: background var(--transition-med); }
-.auth-card { background-color: var(--bg-auth-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); width: 460px; padding: 44px; box-shadow: var(--shadow-card); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); transition: background-color var(--transition-med), border-color var(--transition-med); }
+.auth-card { background-color: var(--bg-auth-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); width: 520px; max-width: 95vw; padding: 44px; box-shadow: var(--shadow-card); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); transition: background-color var(--transition-med), border-color var(--transition-med); }
 .auth-header { text-align: center; margin-bottom: 32px; }
 .logo-icon { color: var(--accent-cyan); margin-bottom: 18px; display: inline-flex; justify-content: center; filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.35)); }
 .auth-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.02em; }
 .auth-subtitle { font-size: 14px; color: var(--text-secondary); }
 .auth-error { margin-top: 18px; padding: 12px; background-color: var(--error-bg); border: 1px solid var(--error-border); border-radius: var(--radius-sm); color: var(--error-text); font-size: 13px; text-align: center; animation: shake 0.3s ease; }
+
+/* レポジトリ一覧スタイル */
+.repo-list-section { margin-bottom: 24px; }
+.repo-list-section h2 { font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.repo-list-container { max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+.repo-card { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); cursor: pointer; transition: all var(--transition-fast); position: relative; }
+.repo-card:hover { background-color: var(--bg-hover); border-color: var(--accent-cyan); box-shadow: var(--accent-cyan-glow); transform: translateY(-1px); }
+.repo-card.selected { background-color: var(--accent-cyan-dim); border-color: var(--accent-cyan); }
+.repo-card-icon { color: var(--accent-cyan); flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background-color: var(--accent-cyan-dim); border-radius: var(--radius-sm); }
+.repo-card-info { flex: 1; min-width: 0; }
+.repo-card-name { font-size: 15px; font-weight: 600; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.repo-card-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.repo-card-delete { position: absolute; top: 8px; right: 8px; background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; border-radius: var(--radius-sm); transition: all var(--transition-fast); opacity: 0; display: flex; align-items: center; justify-content: center; }
+.repo-card:hover .repo-card-delete { opacity: 1; }
+.repo-card-delete:hover { color: var(--error-text); background-color: var(--error-bg); }
+
+.repo-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--text-muted); font-size: 12px; }
+.repo-divider::before, .repo-divider::after { content: ""; flex: 1; height: 1px; background-color: var(--border-color); }
+
+.btn-create-repo { display: flex; width: 100%; align-items: center; justify-content: center; gap: 8px; padding: 12px; background-color: transparent; border: 1px dashed var(--border-color-light); border-radius: var(--radius-md); color: var(--text-secondary); font-size: 14px; font-weight: 500; cursor: pointer; transition: all var(--transition-fast); }
+.btn-create-repo:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); background-color: var(--accent-cyan-dim); }
+
+.btn-back-to-list { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 16px; padding: 4px 0; transition: color var(--transition-fast); }
+.btn-back-to-list:hover { color: var(--text-primary); }
+
+/* ヘッダーレポジトリ名 */
+.header-repo-name { font-size: 13px; color: var(--text-muted); background-color: rgba(128,128,128,0.08); padding: 4px 12px; border-radius: 6px; border: 1px solid var(--border-color); max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-left: 4px; }
 
 .app-container { display: flex; flex-direction: column; height: 100vh; width: 100vw; background-color: var(--bg-primary); }
 .app-header { height: 56px; background-color: var(--bg-secondary); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 5; flex-shrink: 0; transition: background-color var(--transition-med); }
@@ -218,6 +245,24 @@ body { background-color: var(--bg-primary); color: var(--text-primary); font-fam
 @keyframes fadeIn { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
 @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+/* ==========================================================================
+   CSV Viewer / Editor Styles & Search Highlight
+   ========================================================================== */
+.preview-csv-container { width: 100%; height: 100%; padding: 24px; overflow: auto; display: flex; flex-direction: column; gap: 16px; background-color: var(--bg-primary); }
+.csv-table-wrapper { overflow: auto; border: 1px solid var(--border-color); border-radius: var(--radius-md); background-color: var(--bg-secondary); max-height: calc(100vh - 200px); }
+.csv-table { width: 100%; border-collapse: collapse; font-size: 13.5px; text-align: left; color: var(--text-primary); }
+.csv-table th, .csv-table td { padding: 10px 14px; border-bottom: 1px solid var(--border-color); border-right: 1px solid var(--border-color); white-space: nowrap; max-width: 300px; overflow: hidden; text-overflow: ellipsis; }
+.csv-table th { background-color: var(--bg-tertiary); font-weight: 600; color: var(--text-secondary); position: sticky; top: 0; z-index: 1; border-bottom: 2px solid var(--border-color); }
+.csv-table tr:last-child td { border-bottom: none; }
+.csv-table td[contenteditable="true"] { background-color: var(--bg-primary); outline: none; cursor: text; }
+.csv-table td[contenteditable="true"]:focus { box-shadow: inset 0 0 0 2px var(--accent-cyan); background-color: var(--bg-hover); }
+.csv-action-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; border-radius: var(--radius-sm); display: inline-flex; align-items: center; justify-content: center; transition: all var(--transition-fast); }
+.csv-action-btn:hover { background-color: var(--bg-hover); color: var(--error-text); }
+
+/* 検索ハイライト用スタイル */
+.search-highlight { background-color: #fde047; color: #000; border-radius: 2px; padding: 0 2px; font-weight: 600; }
+.content-match-badge { display: inline-block; background-color: rgba(148, 163, 184, 0.15); color: var(--text-muted); font-size: 10px; padding: 2px 6px; border-radius: 10px; margin-left: 8px; border: 1px solid var(--border-color); vertical-align: middle; font-weight: normal; }
 </style>
 </head>
 <body>
@@ -227,15 +272,49 @@ body { background-color: var(--bg-primary); color: var(--text-primary); font-fam
                 <div class="logo-icon">
                     <svg viewBox="0 0 24 24" width="52" height="52" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                 </div>
-                <h1 id="auth-title">マスターパスワードの設定</h1>
+                <h1 id="auth-title">セキュア・ドキュメント・レポジトリ</h1>
                 <p id="auth-subtitle" class="auth-subtitle">ファイルをブラウザ内だけで強力に暗号化して管理します。</p>
             </div>
-            <form id="auth-form" class="auth-form">
-                <div class="form-group" id="setup-message-group">
+
+            <div id="repo-select-view">
+                <div id="repo-list-section" class="repo-list-section" style="display: none;">
+                    <h2>
+                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        登録済みレポジトリ（クリックしてログイン）
+                    </h2>
+                    <div id="repo-list-container" class="repo-list-container"></div>
+                </div>
+                <div id="repo-create-btn-area" style="display: none;">
+                    <div class="repo-divider">または</div>
+                    <button id="btn-show-create-repo" class="btn-create-repo" type="button">
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                        新しいレポジトリを作成
+                    </button>
+                </div>
+            </div>
+
+            <form id="auth-form" class="auth-form" style="display: none;">
+                <div id="login-back-btn-area" style="display: none;">
+                    <button type="button" id="btn-back-to-repo-list" class="btn-back-to-list">
+                        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        レポジトリ一覧に戻る
+                    </button>
+                </div>
+                <div id="login-repo-name-display" style="display: none; margin-bottom: 16px;">
+                    <div class="info-alert" style="padding: 10px 14px;">
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="alert-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        <span>レポジトリ: <strong id="login-target-repo-name"></strong></span>
+                    </div>
+                </div>
+                <div class="form-group" id="setup-message-group" style="display: none;">
                     <div class="info-alert">
                         <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="alert-icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                        <span>初回起動です。このリポジトリを保護するためのマスターパスワードを設定してください。パスワードはローカルでも一切保存されないため、紛失すると二度と復号できません。</span>
+                        <span>新しいレポジトリを作成します。このレポジトリを保護するためのマスターパスワードを設定してください。パスワードはローカルでも一切保存されないため、紛失すると二度と復号できません。</span>
                     </div>
+                </div>
+                <div class="form-group" id="repo-name-group" style="display: none;">
+                    <label for="repo-name-input">レポジトリ名</label>
+                    <input type="text" id="repo-name-input" placeholder="例: 仕事用、個人メモ など" maxlength="100" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label for="master-password" id="password-label">マスターパスワード</label>
@@ -243,12 +322,12 @@ body { background-color: var(--bg-primary); color: var(--text-primary); font-fam
                         <input type="password" id="master-password" required placeholder="パスワードを入力してください" minlength="8" autocomplete="new-password">
                     </div>
                 </div>
-                <div class="form-group" id="password-confirm-group">
+                <div class="form-group" id="password-confirm-group" style="display: none;">
                     <label for="master-password-confirm">パスワード（確認）</label>
                     <input type="password" id="master-password-confirm" placeholder="もう一度パスワードを入力してください" autocomplete="new-password">
                 </div>
                 <button type="submit" id="auth-submit-btn" class="btn btn-primary btn-block">
-                    <span>リポジトリを生成する</span>
+                    <span>ログイン</span>
                 </button>
             </form>
             <div id="auth-error" class="auth-error" style="display: none;"></div>
@@ -260,7 +339,8 @@ body { background-color: var(--bg-primary); color: var(--text-primary); font-fam
 
 <div class="header-logo">
     <svg viewBox="0 0 24 24" width="26" height="26" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="logo-svg"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-    <span class="app-name">SDR <span class="badge">SECURE v1.06</span></span>
+    <span class="app-name">SDR <span class="badge">SECURE <span class="app-version-text">v2.02</span></span></span>
+    <span id="header-repo-name" class="header-repo-name" title=""></span>
     <button id="header-backup-btn" class="btn btn-secondary btn-sm" type="button" title="全データバックアップ">
         <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
         <span>全データバックアップ</span>
@@ -272,10 +352,11 @@ body { background-color: var(--bg-primary); color: var(--text-primary); font-fam
                 <span class="status-indicator">
                     <span class="dot green"></span>
                     <span class="status-text">安全なローカルセッション中</span>
+                    <span id="storage-usage" class="status-text" style="margin-left: 8px; opacity: 0.8; font-size: 11px;"></span>
                 </span>
                 <button id="theme-toggle-btn" class="btn-icon" title="テーマの切り替え">
-                    <svg id="theme-icon-sun" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                    <svg id="theme-icon-moon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <svg id="theme-icon-sun" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg id="theme-icon-moon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                 </button>
                 <button id="help-btn" class="btn-icon" title="ヘルプ">
                     <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
@@ -328,6 +409,10 @@ body { background-color: var(--bg-primary); color: var(--text-primary); font-fam
                             <span id="file-meta-info" class="save-status">---</span>
                         </div>
                         <div class="editor-modes">
+                            <button id="print-file-btn" class="btn btn-secondary btn-sm" style="display: none;">
+                                <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                                <span>印刷</span>
+                            </button>
                             <button id="edit-file-btn" class="btn btn-secondary btn-sm" style="display: none;">
                                 <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"></path></svg>
                                 <span>編集モードにする</span>
@@ -360,6 +445,10 @@ body { background-color: var(--bg-primary); color: var(--text-primary); font-fam
                 <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
                 <span>新規テキストファイル</span>
             </li>
+            <li id="cm-new-csv">
+                <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <span>新規CSVファイル</span>
+            </li>
             <li id="cm-rename">
                 <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"></path></svg>
                 <span>名前変更</span>
@@ -388,20 +477,22 @@ body { background-color: var(--bg-primary); color: var(--text-primary); font-fam
         <div class="modal-card help-modal-card">
             <div class="help-header">
                 <svg viewBox="0 0 24 24" width="26" height="26" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="help-icon"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                <h2>SDR (Secure Document Repository) v1.06 ヘルプ</h2>
+                <h2>SDR (Secure Document Repository) <span class="app-version-text">v2.02</span> ヘルプ</h2>
                 <button id="help-close-btn" class="help-close-btn" title="閉じる">&times;</button>
             </div>
             <div class="help-body">
                 <div class="help-section">
                     <h3>🔐 SDR とは？</h3>
                     <p>SDRは、ブラウザの標準機能（Web Crypto API / IndexedDB）のみを使用し、外部サーバーに一切データを送信せずにファイルを暗号化・管理する<strong>完全ローカルのセキュアファイル管理アプリ</strong>です。</p>
+                    <p><strong class="app-version-text">v2.02</strong>では、複数のレポジトリを独立して管理できるマルチリポジトリ機能や、CSVファイルのネイティブ表示・スプレッドシート形式での編集機能、さらに全文検索時のハイライト機能を搭載しています。</p>
                 </div>
                 <div class="help-section">
                     <h3>🚀 基本的な使い方</h3>
                     <ol>
                         <li><strong>ファイルの追加:</strong> お使いのPCから左側の「ツリー（フォルダ階層）」の任意のフォルダへ、ファイルをドラッグ＆ドロップしてください。自動的に暗号化されて保存されます。（※ブラウザのメモリ負荷を防ぐため、1ファイルあたり20MB以下に制限しています）</li>
-                        <li><strong>テキストの作成と編集:</strong> 余白やフォルダを右クリックして「新規テキストファイル」を作成できます。エディタ内で編集した内容は「変更を保存」ボタンで即座に暗号化されて保存されます。</li>
-                        <li><strong>ファイルの閲覧:</strong> ツリーからファイルをクリックすると、中央の画面でオンメモリで復号され、プレビューが表示されます（画像、PDF、各種テキストファイルに対応）。</li>
+                        <li><strong>テキスト/CSVの作成と編集:</strong> 余白やフォルダを右クリックして「新規テキストファイル」または「新規CSVファイル」を作成できます。エディタ内で編集した内容は「変更を保存」ボタンで即座に暗号化されて保存されます。</li>
+                        <li><strong>ファイルの閲覧:</strong> ツリーからファイルをクリックすると、中央の画面でオンメモリで復号され、プレビューが表示されます（画像、PDF、CSV、各種テキストファイルに対応）。</li>
+                        <li><strong>ファイルの検索:</strong> 左上の検索窓に文字を入力すると、ファイル名およびテキスト/CSVの中身（本文）を検索し、該当箇所がハイライトされます。</li>
                         <li><strong>ファイルの操作:</strong> ツリー上のフォルダやファイルを「右クリック」するとメニューが開き、名前の変更、別のフォルダへの移動、削除、新規フォルダの作成が行えます。</li>
                         <li><strong>ファイルの取り出し:</strong> プレビュー画面右上の「復号してダウンロード」ボタンを押すと、元の状態のファイルとしてお使いのPCに保存できます。</li>
                     </ol>
@@ -425,8 +516,8 @@ body { background-color: var(--bg-primary); color: var(--text-primary); font-fam
                     </ul>
                 </div>
                 <div class="help-footer">
-                    <p>リポジトリ内のすべてのデータと設定を消去し、初期状態に戻したい場合は以下から実行できます。</p>
-                    <span id="reset-repo-link" class="danger-link">⚠️ セキュア・リポジトリを完全に初期化（全データ削除）</span>
+                    <p>このレポジトリ内のすべてのデータと設定を消去し、初期状態に戻したい場合は以下から実行できます。</p>
+                    <span id="reset-repo-link" class="danger-link">⚠️ このレポジトリを完全に初期化（全データ削除）</span>
                     <hr class="help-divider">
                     <div class="backup-restore-section">
                         <h3>💾 リポジトリ全体のバックアップとリストア</h3>
@@ -474,8 +565,10 @@ body { background-color: var(--bg-primary); color: var(--text-primary); font-fam
     <div id="toast-container" class="toast-container"></div>
 
 <script>
+const SDR_VERSION = "2.02";
+
 /* ============================================================
-   crypto-v1.05
+   crypto-v2.02
    ============================================================ */
 const SDR_Crypto = {
     uint8ArrayToBase64(arr) {
@@ -535,18 +628,131 @@ const SDR_Crypto = {
 };
 
 /* ============================================================
-   db-v1.05
+   RepoManager-v2.02 - レポジトリ管理
+   ============================================================ */
+const SDR_RepoManager = {
+    REGISTRY_KEY: "sdr_repo_registry",
+    LEGACY_DB_NAME: "sdr_secure_db_v1_final",
+
+    generateUUID() {
+        if (typeof crypto.randomUUID === "function") return crypto.randomUUID();
+        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => { const r = Math.random() * 16 | 0, v = c === "x" ? r : (r & 0x3 | 0x8); return v.toString(16); });
+    },
+
+    getRepoList() {
+        try {
+            const raw = localStorage.getItem(this.REGISTRY_KEY);
+            return raw ? JSON.parse(raw) : [];
+        } catch (e) {
+            console.warn("レポジトリ一覧の読込失敗", e);
+            return [];
+        }
+    },
+
+    saveRepoList(list) {
+        localStorage.setItem(this.REGISTRY_KEY, JSON.stringify(list));
+    },
+
+    addRepo(name) {
+        const list = this.getRepoList();
+        const id = this.generateUUID();
+        const repo = {
+            id,
+            name: name || "無題のレポジトリ",
+            dbName: `sdr_repo_${id}`,
+            createdAt: Date.now()
+        };
+        list.push(repo);
+        this.saveRepoList(list);
+        return repo;
+    },
+
+    removeRepo(repoId) {
+        const list = this.getRepoList();
+        const repo = list.find(r => r.id === repoId);
+        if (!repo) return false;
+        
+        // IndexedDBを削除
+        try {
+            indexedDB.deleteDatabase(repo.dbName);
+        } catch(e) {
+            console.warn("DB削除失敗", e);
+        }
+        
+        const newList = list.filter(r => r.id !== repoId);
+        this.saveRepoList(newList);
+        return true;
+    },
+
+    getRepoById(repoId) {
+        return this.getRepoList().find(r => r.id === repoId) || null;
+    },
+
+    async checkLegacyDB() {
+        return new Promise((resolve) => {
+            try {
+                const request = indexedDB.open(this.LEGACY_DB_NAME, 1);
+                request.onerror = () => resolve(false);
+                request.onsuccess = (e) => {
+                    const db = e.target.result;
+                    const hasStores = db.objectStoreNames.contains("app_settings");
+                    db.close();
+                    resolve(hasStores);
+                };
+                request.onupgradeneeded = (e) => {
+                    // DBが存在しない場合新規作成されるのでキャンセル
+                    e.target.transaction.abort();
+                    resolve(false);
+                };
+            } catch(e) {
+                resolve(false);
+            }
+        });
+    },
+
+    async migrateLegacyDB() {
+        const list = this.getRepoList();
+        // 既に移行済みか確認
+        if (list.some(r => r.dbName === this.LEGACY_DB_NAME)) return null;
+        
+        const hasLegacy = await this.checkLegacyDB();
+        if (!hasLegacy) return null;
+
+        const repo = {
+            id: this.generateUUID(),
+            name: "デフォルトレポジトリ",
+            dbName: this.LEGACY_DB_NAME,
+            createdAt: Date.now()
+        };
+        list.push(repo);
+        this.saveRepoList(list);
+        return repo;
+    },
+
+    formatDate(timestamp) {
+        const d = new Date(timestamp);
+        return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
+    }
+};
+
+/* ============================================================
+   db-v2.02
    ============================================================ */
 const SDR_DB = {
-    dbName: "sdr_secure_db_v1_final",
     fileStore: "encrypted_files",
     indexStore: "app_index",
     settingsStore: "app_settings",
     db: null,
+    currentDbName: null,
     
-    init() {
+    init(dbName) {
+        this.currentDbName = dbName;
         return new Promise((resolve, reject) => {
-            const request = indexedDB.open(this.dbName, 1);
+            if (this.db) {
+                try { this.db.close(); } catch(e) {}
+                this.db = null;
+            }
+            const request = indexedDB.open(dbName, 1);
             request.onerror = (e) => reject("DB初期化失敗: " + e.target.error?.message);
             request.onsuccess = (e) => { this.db = e.target.result; resolve(this.db); };
             request.onupgradeneeded = (e) => {
@@ -556,6 +762,13 @@ const SDR_DB = {
                 if (!db.objectStoreNames.contains(this.settingsStore)) db.createObjectStore(this.settingsStore, { keyPath: "id" });
             };
         });
+    },
+    closeDB() {
+        if (this.db) {
+            try { this.db.close(); } catch(e) {}
+            this.db = null;
+            this.currentDbName = null;
+        }
     },
     saveIndex(encryptedUint8Array) {
         return new Promise((resolve, reject) => {
@@ -618,7 +831,6 @@ const SDR_DB = {
             req.onsuccess = () => resolve();
         });
     },
-    // 【修正】アトミックなデータ消去処理に変更
     clearAll() {
         return new Promise((resolve, reject) => {
             if (!this.db) return reject("DB未初期化");
@@ -635,7 +847,7 @@ const SDR_DB = {
 };
 
 /* ============================================================
-   tree-v1.05
+   tree-v2.02
    ============================================================ */
 const SDR_Tree = {
     nodes: [], expandedNodes: new Set(), activeNodeId: null, filterQuery: "",
@@ -757,13 +969,46 @@ const SDR_Tree = {
             const isExpanded = this.expandedNodes.has(node.id);
             iconSpan.innerHTML = `<svg viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" stroke-width="2" fill="${isExpanded ? 'currentColor' : 'none'}" style="color:var(--folder-icon-color)"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>`;
         } else {
-            iconSpan.innerHTML = `<svg viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" stroke-width="2" fill="none" style="color:var(--file-icon-color)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>`;
+            iconSpan.innerHTML = this.getFileIconSvg(node);
         }
         
         const nameSpan = document.createElement("span");
         nameSpan.className = "node-name";
         nameSpan.title = node.name;
-        nameSpan.textContent = node.name; 
+        
+        // --- 検索ハイライトのロジック ---
+        if (this.filterQuery) {
+            const q = this.filterQuery;
+            const qLower = q.toLowerCase();
+            const nLower = node.name.toLowerCase();
+            
+            if (nLower.includes(qLower)) {
+                const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, "gi");
+                const parts = node.name.split(regex);
+                parts.forEach(part => {
+                    if (part.toLowerCase() === qLower) {
+                        const mark = document.createElement("mark");
+                        mark.className = "search-highlight";
+                        mark.textContent = part;
+                        nameSpan.appendChild(mark);
+                    } else if (part) {
+                        nameSpan.appendChild(document.createTextNode(part));
+                    }
+                });
+            } else {
+                nameSpan.textContent = node.name;
+                // ファイル名にないが、本文一致している場合のバッジ
+                if (this.matchedIds && this.matchedIds.has(node.id) && node.type === "file") {
+                    const badge = document.createElement("span");
+                    badge.className = "content-match-badge";
+                    badge.textContent = "本文一致";
+                    nameSpan.appendChild(badge);
+                }
+            }
+        } else {
+            nameSpan.textContent = node.name; 
+        }
+        // -----------------------------
 
         item.appendChild(arrowSpan);
         item.appendChild(iconSpan);
@@ -809,6 +1054,30 @@ const SDR_Tree = {
         el.addEventListener("contextmenu", (e) => { e.preventDefault(); e.stopPropagation(); this.showContextMenu(e.clientX, e.clientY, node); });
     },
 
+    getFileIconSvg(node) {
+        const mimeType = node.metadata?.mimeType || "";
+        const ext = (node.name || "").split('.').pop().toLowerCase();
+
+        // 画像
+        if (mimeType.startsWith("image/") || ["png","jpg","jpeg","gif","svg","webp","bmp","ico"].includes(ext)) {
+            return `<svg viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" stroke-width="2" fill="none" style="color:#10b981"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>`;
+        }
+        // PDF
+        if (mimeType === "application/pdf" || ext === "pdf") {
+            return `<svg viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" stroke-width="2" fill="none" style="color:#ef4444"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>`;
+        }
+        // CSV
+        if (ext === "csv" || mimeType === "text/csv") {
+            return `<svg viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" stroke-width="2" fill="none" style="color:#22c55e"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg>`;
+        }
+        // テキスト系
+        if (mimeType.startsWith("text/") || ["application/json","application/javascript"].includes(mimeType) || ["txt","md","js","ts","css","json","html","xml","log","yaml","yml","ini","cfg","conf","sh","bat","py","rb","java","c","cpp","h","go","rs","php","sql"].includes(ext)) {
+            return `<svg viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" stroke-width="2" fill="none" style="color:#3b82f6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
+        }
+        // その他（デフォルト）
+        return `<svg viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" stroke-width="2" fill="none" style="color:var(--file-icon-color)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>`;
+    },
+
     showRootContextMenu(x, y) {
         const menu = document.getElementById("context-menu"); if (!menu) return;
         menu.style.display = "block"; menu.style.left = `${x}px`; menu.style.top = `${y}px`;
@@ -816,6 +1085,7 @@ const SDR_Tree = {
         
         const newFolderOpt = document.getElementById("cm-new-folder"), 
               newFileOpt   = document.getElementById("cm-new-file"),
+              newCsvOpt    = document.getElementById("cm-new-csv"),
               renameOpt    = document.getElementById("cm-rename"),
               moveOpt      = document.getElementById("cm-move"),
               exportOpt    = document.getElementById("cm-export"), 
@@ -824,11 +1094,21 @@ const SDR_Tree = {
               
         if (newFolderOpt) newFolderOpt.style.display = "flex";
         if (newFileOpt) newFileOpt.style.display = "flex";
+        if (newCsvOpt) newCsvOpt.style.display = "flex";
         if (renameOpt) renameOpt.style.display = "none";
         if (moveOpt) moveOpt.style.display = "none";
         if (exportOpt) exportOpt.style.display = "none";
         if (importOpt) importOpt.style.display = "flex";
         if (deleteOpt) deleteOpt.style.display = "none";
+        
+        // 画面端はみ出し補正
+        requestAnimationFrame(() => {
+            const rect = menu.getBoundingClientRect();
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            if (rect.right > vw) menu.style.left = `${vw - rect.width - 10}px`;
+            if (rect.bottom > vh) menu.style.top = `${vh - rect.height - 10}px`;
+        });
     },
 
     showContextMenu(x, y, node) {
@@ -838,6 +1118,7 @@ const SDR_Tree = {
         
         const newFolderOpt = document.getElementById("cm-new-folder"), 
               newFileOpt   = document.getElementById("cm-new-file"),
+              newCsvOpt    = document.getElementById("cm-new-csv"),
               renameOpt    = document.getElementById("cm-rename"),
               moveOpt      = document.getElementById("cm-move"),
               exportOpt    = document.getElementById("cm-export"), 
@@ -851,23 +1132,39 @@ const SDR_Tree = {
         if (node.type === "file") {
             if (newFolderOpt) newFolderOpt.style.display = "none"; 
             if (newFileOpt) newFileOpt.style.display = "none";
+            if (newCsvOpt) newCsvOpt.style.display = "none";
             if (importOpt) importOpt.style.display = "none"; 
             if (exportOpt) exportOpt.style.display = "flex";
         } else {
             if (newFolderOpt) newFolderOpt.style.display = "flex"; 
             if (newFileOpt) newFileOpt.style.display = "flex";
+            if (newCsvOpt) newCsvOpt.style.display = "flex";
             if (exportOpt) exportOpt.style.display = "flex"; 
             if (importOpt) importOpt.style.display = "flex";
         }
+        
+        // 画面端はみ出し補正
+        requestAnimationFrame(() => {
+            const rect = menu.getBoundingClientRect();
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            if (rect.right > vw) menu.style.left = `${vw - rect.width - 10}px`;
+            if (rect.bottom > vh) menu.style.top = `${vh - rect.height - 10}px`;
+        });
     }
 };
 
 /* ============================================================
-   editor-v1.05
+   editor-v2.02
    ============================================================ */
 const SDR_Editor = {
     activeFileId: null, activeFileName: "", activeFileType: "", activeFileSize: 0, 
     currentObjectUrl: null, onNameChangedInEditor: null,
+
+    hasUnsavedChanges() {
+        const saveBtn = document.getElementById("save-file-btn");
+        return saveBtn && saveBtn.style.display !== "none" && !saveBtn.disabled;
+    },
 
     init() {
         const nameInput = document.getElementById("active-file-name");
@@ -910,17 +1207,21 @@ const SDR_Editor = {
         if(saveBtn) saveBtn.style.display = "none";
         const editBtn = document.getElementById("edit-file-btn");
         if(editBtn) editBtn.style.display = "none";
+        const printBtn = document.getElementById("print-file-btn");
+        if(printBtn) printBtn.style.display = "none";
     },
 
     renderPreview() {
         const viewerContent = document.getElementById("viewer-content");
         viewerContent.innerHTML = "";
         
-        // デフォルトで編集・保存ボタンを隠す
+        // デフォルトで編集・保存・印刷ボタンを隠す
         const saveBtn = document.getElementById("save-file-btn");
         if(saveBtn) saveBtn.style.display = "none";
         const editBtn = document.getElementById("edit-file-btn");
         if(editBtn) editBtn.style.display = "none";
+        const printBtn = document.getElementById("print-file-btn");
+        if(printBtn) printBtn.style.display = "none";
 
         const type = this.activeFileType, url = this.currentObjectUrl;
         if (!url && this.activeFileSize > 0) return this.renderFallbackView("ファイルデータが空です。");
@@ -928,12 +1229,29 @@ const SDR_Editor = {
         if (type.startsWith("image/")) {
             const container = document.createElement("div"); container.className = "preview-image-container";
             const img = document.createElement("img"); img.src = url; img.className = "preview-image";
-            container.appendChild(img); viewerContent.appendChild(container); return;
+            container.appendChild(img); viewerContent.appendChild(container);
+            if (printBtn) {
+                printBtn.style.display = "inline-flex";
+                printBtn.onclick = () => this.printImage(url);
+            }
+            return;
         }
         if (type === "application/pdf") {
             const container = document.createElement("div"); container.className = "preview-pdf-container";
             const iframe = document.createElement("iframe"); iframe.src = url; iframe.className = "preview-pdf";
             container.appendChild(iframe); viewerContent.appendChild(container); return;
+        }
+
+        // --- CSVファイルの判定 ---
+        if (this.activeFileName.toLowerCase().endsWith('.csv')) {
+            if (this.activeFileSize === 0) {
+                this.renderCsvEditor("");
+            } else {
+                fetch(url).then(res => res.text()).then(text => {
+                    this.renderCsvEditor(text);
+                }).catch(() => this.renderFallbackView("CSVの読み込みに失敗しました。"));
+            }
+            return;
         }
         
         if (type.startsWith("text/") || ["application/json", "application/javascript"].includes(type) || this.isTextExtension(this.activeFileName)) {
@@ -962,6 +1280,7 @@ const SDR_Editor = {
         
         const saveBtn = document.getElementById("save-file-btn");
         const editBtn = document.getElementById("edit-file-btn");
+        const printBtn = document.getElementById("print-file-btn");
         
         // ヘッダーの編集ボタンを表示して初期化
         if(editBtn) {
@@ -977,6 +1296,7 @@ const SDR_Editor = {
                     textarea.readOnly = false;
                     editBtn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg><span>編集をキャンセル</span>`;
                     editBtn.classList.replace("btn-secondary", "btn-danger");
+                    if(printBtn) printBtn.style.display = "none";
                     textarea.focus();
                 } else {
                     // 閲覧モードへ戻す（変更破棄）
@@ -989,8 +1309,14 @@ const SDR_Editor = {
                         saveBtn.classList.add("btn-secondary");
                         saveBtn.style.display = "none";
                     }
+                    if(printBtn) printBtn.style.display = "inline-flex";
                 }
             };
+        }
+
+        if(printBtn) {
+            printBtn.style.display = "inline-flex";
+            printBtn.onclick = () => this.printText(textarea.value);
         }
 
         textarea.addEventListener("input", () => {
@@ -1021,10 +1347,153 @@ const SDR_Editor = {
                     editBtn.classList.replace("btn-danger", "btn-secondary");
                 }
                 saveBtn.style.display = "none";
+                if(printBtn) printBtn.style.display = "inline-flex";
             };
         }
     },
     
+    printText(text) {
+        const printWindow = window.open('', '_blank');
+        if (!printWindow) {
+            showToast("ポップアップがブロックされました。ブラウザの設定を確認して許可してください。", "error");
+            return;
+        }
+
+        const safeText = text.replace(/&/g, '&amp;')
+                             .replace(/</g, '&lt;')
+                             .replace(/>/g, '&gt;')
+                             .replace(/"/g, '&quot;')
+                             .replace(/'/g, '&#039;');
+        const safeFileName = this.activeFileName.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html lang="ja">
+            <head>
+                <meta charset="UTF-8">
+                <title>${safeFileName} - 印刷</title>
+                <style>
+                    body {
+                        font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                        white-space: pre-wrap;
+                        word-break: break-all;
+                        padding: 20px;
+                        color: #000;
+                        background: #fff;
+                        font-size: 14px;
+                        line-height: 1.6;
+                    }
+                    @media print {
+                        @page { margin: 15mm; }
+                    }
+                </style>
+            </head>
+            <body>${safeText}</body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.focus();
+
+        setTimeout(() => {
+            printWindow.print();
+            printWindow.onafterprint = () => printWindow.close();
+        }, 250);
+    },
+
+    printImage(url) {
+        const printWindow = window.open('', '_blank');
+        if (!printWindow) {
+            showToast("ポップアップがブロックされました。ブラウザの設定を確認して許可してください。", "error");
+            return;
+        }
+
+        // Blob URLからdata URLに変換して印刷ウィンドウで確実に表示
+        fetch(url).then(res => res.blob()).then(blob => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const dataUrl = reader.result;
+                const safeFileName = this.activeFileName.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                printWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="ja">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>${safeFileName} - 印刷</title>
+                        <style>
+                            body { margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #fff; }
+                            img { max-width: 100%; max-height: 100vh; object-fit: contain; }
+                            @media print { @page { margin: 10mm; } body { min-height: auto; } }
+                        </style>
+                    </head>
+                    <body><img src="${dataUrl}"></body>
+                    </html>
+                `);
+                printWindow.document.close();
+                printWindow.focus();
+                const imgEl = printWindow.document.querySelector("img");
+                const doPrint = () => { printWindow.print(); printWindow.onafterprint = () => printWindow.close(); };
+                if (imgEl && imgEl.complete) setTimeout(doPrint, 250);
+                else if (imgEl) imgEl.onload = () => setTimeout(doPrint, 250);
+                else setTimeout(doPrint, 500);
+            };
+            reader.readAsDataURL(blob);
+        }).catch(() => {
+            printWindow.close();
+            showToast("印刷の準備に失敗しました。", "error");
+        });
+    },
+
+    printCsv(matrix) {
+        const printWindow = window.open('', '_blank');
+        if (!printWindow) {
+            showToast("ポップアップがブロックされました。ブラウザの設定を確認して許可してください。", "error");
+            return;
+        }
+
+        const maxCols = Math.max(...matrix.map(row => row.length), 1);
+        let tableHtml = '<table><thead><tr><th>#</th>';
+        for (let j = 0; j < maxCols; j++) {
+            tableHtml += `<th>${String.fromCharCode(65 + (j % 26))}${j >= 26 ? Math.floor(j / 26) : ''}</th>`;
+        }
+        tableHtml += '</tr></thead><tbody>';
+        matrix.forEach((row, i) => {
+            tableHtml += `<tr><td class="row-num">${i + 1}</td>`;
+            for (let j = 0; j < maxCols; j++) {
+                const cell = (row[j] || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                tableHtml += `<td>${cell}</td>`;
+            }
+            tableHtml += '</tr>';
+        });
+        tableHtml += '</tbody></table>';
+
+        const safeFileName = this.activeFileName.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html lang="ja">
+            <head>
+                <meta charset="UTF-8">
+                <title>${safeFileName} - 印刷</title>
+                <style>
+                    body { font-family: 'Segoe UI', sans-serif; padding: 20px; color: #000; background: #fff; font-size: 13px; }
+                    h1 { font-size: 16px; margin-bottom: 12px; color: #333; }
+                    table { width: 100%; border-collapse: collapse; }
+                    th, td { padding: 5px 10px; border: 1px solid #aaa; text-align: left; white-space: nowrap; }
+                    th { background-color: #eee; font-weight: 600; }
+                    .row-num { text-align: center; color: #888; background-color: #f5f5f5; }
+                    @media print { @page { margin: 10mm; } }
+                </style>
+            </head>
+            <body><h1>${safeFileName}</h1>${tableHtml}</body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.focus();
+        setTimeout(() => {
+            printWindow.print();
+            printWindow.onafterprint = () => printWindow.close();
+        }, 250);
+    },
+
     renderFallbackView(customMsg) {
         const viewerContent = document.getElementById("viewer-content");
         viewerContent.innerHTML = "";
@@ -1060,21 +1529,300 @@ const SDR_Editor = {
         const a = document.createElement("a");
         a.href = this.currentObjectUrl; a.download = this.activeFileName;
         document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    },
+
+    /* ============================================================
+       CSV Parser / Serializer / Editor Functionality
+       ============================================================ */
+    // RFC 4180に準拠した簡易CSVパース（ダブルクォーテーションのパースに対応）
+    parseCsv(text) {
+        const lines = [];
+        let row = [''];
+        let inQuotes = false;
+        for (let i = 0; i < text.length; i++) {
+            const c = text[i];
+            const next = text[i+1];
+            if (c === '"') {
+                if (inQuotes && next === '"') { row[row.length - 1] += '"'; i++; }
+                else { inQuotes = !inQuotes; }
+            } else if (c === ',' && !inQuotes) {
+                row.push('');
+            } else if ((c === '\r' || c === '\n') && !inQuotes) {
+                if (c === '\r' && next === '\n') { i++; }
+                lines.push(row.splice(0, row.length));
+                row.push('');
+            } else {
+                row[row.length - 1] += c;
+            }
+        }
+        if (row.length > 1 || row[0] !== '') {
+            lines.push(row);
+        }
+        return lines;
+    },
+
+    // 2次元配列をCSV文字列に変換
+    stringifyCsv(matrix) {
+        return matrix.map(row => {
+            return row.map(cell => {
+                const escaped = String(cell).replace(/"/g, '""');
+                if (escaped.includes(',') || escaped.includes('\n') || escaped.includes('\r') || escaped.includes('"')) {
+                    return `"${escaped}"`;
+                }
+                return escaped;
+            }).join(',');
+        }).join('\n');
+    },
+
+    // CSV用の表示・編集レンダラー
+    renderCsvEditor(text) {
+        const viewerContent = document.getElementById("viewer-content");
+        viewerContent.innerHTML = "";
+
+        const container = document.createElement("div");
+        container.className = "preview-csv-container";
+
+        const tableWrapper = document.createElement("div");
+        tableWrapper.className = "csv-table-wrapper";
+
+        const table = document.createElement("table");
+        table.className = "csv-table";
+
+        let matrix = this.parseCsv(text);
+        if (matrix.length === 0 || (matrix.length === 1 && matrix[0].length === 1 && matrix[0][0] === "")) {
+            matrix = [["", "", ""]]; // 空ファイルの場合はデフォルト3列の空行
+        }
+
+        let isEditing = false;
+
+        // テーブル構造を動的にレンダリングするスコープ関数
+        const renderTableBody = () => {
+            table.innerHTML = "";
+            const maxCols = Math.max(...matrix.map(row => row.length), 1);
+
+            // ヘッダー部 (A, B, C... 列の自動生成)
+            const thead = document.createElement("thead");
+            const headerRow = document.createElement("tr");
+            
+            const thIndex = document.createElement("th");
+            thIndex.style.width = "50px";
+            thIndex.style.textAlign = "center";
+            thIndex.textContent = "#";
+            headerRow.appendChild(thIndex);
+
+            for (let j = 0; j < maxCols; j++) {
+                const th = document.createElement("th");
+                th.textContent = String.fromCharCode(65 + (j % 26)) + (j >= 26 ? Math.floor(j / 26) : "");
+                headerRow.appendChild(th);
+            }
+            if (isEditing) {
+                const thAction = document.createElement("th");
+                thAction.style.width = "60px";
+                thAction.textContent = "操作";
+                headerRow.appendChild(thAction);
+            }
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            // データ行部
+            const tbody = document.createElement("tbody");
+            matrix.forEach((row, rowIndex) => {
+                const tr = document.createElement("tr");
+                
+                // 行番号
+                const tdIndex = document.createElement("td");
+                tdIndex.style.backgroundColor = "var(--bg-tertiary)";
+                tdIndex.style.color = "var(--text-muted)";
+                tdIndex.style.textAlign = "center";
+                tdIndex.textContent = rowIndex + 1;
+                tr.appendChild(tdIndex);
+
+                for (let j = 0; j < maxCols; j++) {
+                    const td = document.createElement("td");
+                    
+                    const cellText = row[j] || "";
+                    // ハイライトの適用 (編集モードでない場合かつ検索クエリがある場合)
+                    if (!isEditing && SDR_Tree.filterQuery && cellText.toLowerCase().includes(SDR_Tree.filterQuery.toLowerCase())) {
+                        const q = SDR_Tree.filterQuery;
+                        const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, "gi");
+                        const parts = cellText.split(regex);
+                        parts.forEach(part => {
+                            if (part.toLowerCase() === q.toLowerCase()) {
+                                const mark = document.createElement("mark");
+                                mark.className = "search-highlight";
+                                mark.textContent = part;
+                                td.appendChild(mark);
+                            } else if (part) {
+                                td.appendChild(document.createTextNode(part));
+                            }
+                        });
+                    } else {
+                        td.textContent = cellText;
+                    }
+
+                    if (isEditing) {
+                        td.contentEditable = "true";
+                        td.className = "csv-cell-editable";
+                    }
+                    tr.appendChild(td);
+                }
+
+                // 編集モード時のみ「行削除」ボタンを付与
+                if (isEditing) {
+                    const tdAction = document.createElement("td");
+                    tdAction.style.textAlign = "center";
+                    const delBtn = document.createElement("button");
+                    delBtn.className = "csv-action-btn";
+                    delBtn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`;
+                    delBtn.title = "行削除";
+                    delBtn.onclick = () => {
+                        matrix.splice(rowIndex, 1);
+                        if (matrix.length === 0) matrix.push(Array(maxCols).fill(""));
+                        renderTableBody();
+                    };
+                    tdAction.appendChild(delBtn);
+                    tr.appendChild(tdAction);
+                }
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+        };
+
+        renderTableBody();
+        tableWrapper.appendChild(table);
+        container.appendChild(tableWrapper);
+
+        // 操作ボタン（行追加・列追加）の定義
+        const addRowBtn = document.createElement("button");
+        addRowBtn.className = "btn btn-secondary btn-sm";
+        addRowBtn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>行を追加</span>`;
+        addRowBtn.style.display = "none";
+        addRowBtn.onclick = () => {
+            const maxCols = Math.max(...matrix.map(row => row.length), 1);
+            matrix.push(Array(maxCols).fill(""));
+            renderTableBody();
+        };
+
+        const addColBtn = document.createElement("button");
+        addColBtn.className = "btn btn-secondary btn-sm";
+        addColBtn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>列を追加</span>`;
+        addColBtn.style.display = "none";
+        addColBtn.onclick = () => {
+            matrix.forEach(row => row.push(""));
+            renderTableBody();
+        };
+        
+        const btnContainer = document.createElement("div");
+        btnContainer.style.display = "flex";
+        btnContainer.style.gap = "10px";
+        btnContainer.appendChild(addRowBtn);
+        btnContainer.appendChild(addColBtn);
+        container.appendChild(btnContainer);
+
+        viewerContent.appendChild(container);
+
+        const saveBtn = document.getElementById("save-file-btn");
+        const editBtn = document.getElementById("edit-file-btn");
+
+        // 編集モード切替の制御
+        if (editBtn) {
+            editBtn.style.display = "inline-flex";
+            editBtn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"></path></svg><span>編集モードにする</span>`;
+            editBtn.classList.remove("btn-danger");
+            editBtn.classList.add("btn-secondary");
+
+            editBtn.onclick = () => {
+                if (!isEditing) {
+                    isEditing = true;
+                    editBtn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg><span>編集を終了 (キャンセル)</span>`;
+                    editBtn.classList.remove("btn-secondary");
+                    editBtn.classList.add("btn-danger");
+                    if (saveBtn) saveBtn.style.display = "inline-flex";
+                    addRowBtn.style.display = "inline-flex";
+                    addColBtn.style.display = "inline-flex";
+                    renderTableBody();
+                } else {
+                    isEditing = false;
+                    editBtn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"></path></svg><span>編集モードにする</span>`;
+                    editBtn.classList.remove("btn-danger");
+                    editBtn.classList.add("btn-secondary");
+                    if (saveBtn) saveBtn.style.display = "none";
+                    addRowBtn.style.display = "none";
+                    addColBtn.style.display = "none";
+                    matrix = this.parseCsv(text); // 変更を破棄して元に戻す
+                    renderTableBody();
+                }
+            };
+        }
+
+        // 印刷ボタンの制御
+        const printBtn = document.getElementById("print-file-btn");
+        if (printBtn) {
+            printBtn.style.display = "inline-flex";
+            printBtn.onclick = () => this.printCsv(matrix);
+        }
+
+        // セキュア暗号化保存処理
+        if (saveBtn) {
+            saveBtn.onclick = async () => {
+                const rows = table.querySelectorAll("tbody tr");
+                const newMatrix = [];
+                rows.forEach(tr => {
+                    const cells = tr.querySelectorAll("td.csv-cell-editable");
+                    if (cells.length > 0) {
+                        const rowData = [];
+                        cells.forEach(td => { rowData.push(td.textContent); });
+                        newMatrix.push(rowData);
+                    }
+                });
+
+                const csvText = this.stringifyCsv(newMatrix);
+                const originalText = saveBtn.innerHTML;
+                saveBtn.innerHTML = `<span>保存中...</span>`;
+                saveBtn.disabled = true;
+
+                try {
+                    await SDR_App.saveTextFile(this.activeFileId, csvText);
+                    showToast("変更を保存しました", "success");
+                    text = csvText;
+                    matrix = newMatrix;
+                    isEditing = false;
+                    editBtn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"></path></svg><span>編集モードにする</span>`;
+                    editBtn.classList.remove("btn-danger");
+                    editBtn.classList.add("btn-secondary");
+                    saveBtn.style.display = "none";
+                    addRowBtn.style.display = "none";
+                    addColBtn.style.display = "none";
+                    renderTableBody();
+                } catch (err) {
+                    showToast("保存に失敗しました", "error");
+                    console.error(err);
+                } finally {
+                    saveBtn.innerHTML = originalText;
+                    saveBtn.disabled = false;
+                }
+            };
+        }
     }
 };
 window.SDR_Editor = SDR_Editor;
 
 /* ============================================================
-   SDR_App-v1.05
+   SDR_App-v2.02 (マルチリポジトリ対応)
    ============================================================ */
 const SDR_App = {
     masterKey: null, indexKey: null,
+    activeRepo: null, // 現在アクティブなレポジトリ情報
+    authMode: null, // "select", "login", "create"
 
     async init() { 
+        document.title = `セキュア・ドキュメント・レポジトリ (SDR) v${SDR_VERSION}`;
+        document.querySelectorAll(".app-version-text").forEach(el => el.textContent = `v${SDR_VERSION}`);
         try {
-            await SDR_DB.init(); 
-            await this.initTheme(); 
-            await this.checkSetupState(); 
+            await this.initThemeEarly();
+            // レガシーDB移行チェック
+            await SDR_RepoManager.migrateLegacyDB();
+            this.showAuthScreen();
             this.bindEvents(); 
             initSplitter(); 
             SDR_Editor.init(); 
@@ -1084,18 +1832,26 @@ const SDR_App = {
         }
     },
 
-    async initTheme() {
+    async initThemeEarly() {
         let theme = "dark"; 
         try {
             const stored = localStorage.getItem("sdr_theme");
             if (stored) { theme = stored; }
-            else {
-                const themeRecord = await SDR_DB.getSetting("sdr_theme");
-                if (themeRecord && themeRecord.value) theme = themeRecord.value;
-                else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) theme = "light";
-            }
+            else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) theme = "light";
         } catch (e) { console.warn("Theme load failed", e); }
         this.applyTheme(theme);
+    },
+
+    updateStorageUsage() {
+        if (navigator.storage && navigator.storage.estimate) {
+            navigator.storage.estimate().then(({usage}) => {
+                const el = document.getElementById("storage-usage");
+                if (el) {
+                    const usageMB = (usage / (1024*1024)).toFixed(1);
+                    el.textContent = `| 使用量: ${usageMB}MB`;
+                }
+            }).catch(() => {});
+        }
     },
     
     applyTheme(theme) {
@@ -1114,23 +1870,216 @@ const SDR_App = {
         this.applyTheme(next);
         try { 
             localStorage.setItem("sdr_theme", next); 
-            await SDR_DB.saveSetting("sdr_theme", next); 
+            if (SDR_DB.db) await SDR_DB.saveSetting("sdr_theme", next); 
         } catch(e) {}
     },
 
-    async checkSetupState() {
-        let saltB64 = null;
-        try {
-            const saltRecord = await SDR_DB.getSetting("sdr_master_salt");
-            saltB64 = saltRecord ? saltRecord.value : null;
-        } catch (e) { console.warn("Salt check failed", e); }
+    /* =============================================
+       認証画面の表示管理
+       ============================================= */
+    showAuthScreen() {
+        const repos = SDR_RepoManager.getRepoList();
         
-        document.getElementById("auth-title").textContent = saltB64 ? "セキュア・ログイン" : "マスターパスワードの設定";
-        document.querySelector("#auth-submit-btn span").textContent = saltB64 ? "ログイン" : "リポジトリを生成する";
-        document.getElementById("password-confirm-group").style.display = saltB64 ? "none" : "block";
-        document.getElementById("setup-message-group").style.display = saltB64 ? "none" : "block";
+        if (repos.length === 0) {
+            // レポジトリが0件: 直接作成フォームを表示
+            this.showCreateForm(false);
+        } else {
+            // レポジトリが1件以上: 選択画面
+            this.showRepoSelectView(repos);
+        }
     },
 
+    showRepoSelectView(repos) {
+        this.authMode = "select";
+        document.getElementById("auth-title").textContent = "セキュア・ドキュメント・レポジトリ";
+        document.getElementById("auth-subtitle").textContent = "ログインするレポジトリを選択してください。";
+        
+        document.getElementById("repo-select-view").style.display = "block";
+        document.getElementById("auth-form").style.display = "none";
+        document.getElementById("auth-error").style.display = "none";
+        
+        // レポジトリ一覧を構築
+        const listSection = document.getElementById("repo-list-section");
+        const listContainer = document.getElementById("repo-list-container");
+        listSection.style.display = "block";
+        listContainer.innerHTML = "";
+
+        repos.forEach(repo => {
+            const card = document.createElement("div");
+            card.className = "repo-card";
+            card.dataset.repoId = repo.id;
+
+            card.innerHTML = `
+                <div class="repo-card-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </div>
+                <div class="repo-card-info">
+                    <div class="repo-card-name"></div>
+                    <div class="repo-card-meta">作成: ${SDR_RepoManager.formatDate(repo.createdAt)}</div>
+                </div>
+            `;
+            // XSS安全にレポジトリ名を設定
+            card.querySelector(".repo-card-name").textContent = repo.name;
+
+            // 削除ボタン
+            const deleteBtn = document.createElement("button");
+            deleteBtn.className = "repo-card-delete";
+            deleteBtn.title = "このレポジトリを削除";
+            deleteBtn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`;
+            deleteBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                this.promptDeleteRepo(repo);
+            });
+            card.appendChild(deleteBtn);
+
+            card.addEventListener("click", () => {
+                this.showLoginForm(repo);
+            });
+
+            listContainer.appendChild(card);
+        });
+
+        // 新規作成ボタンエリア
+        document.getElementById("repo-create-btn-area").style.display = "block";
+    },
+
+    showLoginForm(repo) {
+        this.authMode = "login";
+        this.activeRepo = repo;
+        
+        document.getElementById("auth-title").textContent = "セキュア・ログイン";
+        document.getElementById("auth-subtitle").textContent = "マスターパスワードを入力してログインしてください。";
+        
+        document.getElementById("repo-select-view").style.display = "none";
+        document.getElementById("auth-form").style.display = "block";
+        document.getElementById("auth-error").style.display = "none";
+        
+        // ログイン対象レポジトリ名を表示
+        document.getElementById("login-repo-name-display").style.display = "block";
+        document.getElementById("login-target-repo-name").textContent = repo.name;
+        
+        // 戻るボタン表示（レポジトリが複数の場合のみ意味がある）
+        const repos = SDR_RepoManager.getRepoList();
+        document.getElementById("login-back-btn-area").style.display = repos.length > 0 ? "block" : "none";
+        
+        // 新規作成用のフィールドを隠す
+        document.getElementById("setup-message-group").style.display = "none";
+        document.getElementById("repo-name-group").style.display = "none";
+        document.getElementById("password-confirm-group").style.display = "none";
+        
+        document.querySelector("#auth-submit-btn span").textContent = "ログイン";
+        document.getElementById("master-password").value = "";
+        document.getElementById("master-password").focus();
+    },
+
+    showCreateForm(showBackButton = true) {
+        this.authMode = "create";
+        this.activeRepo = null;
+        
+        document.getElementById("auth-title").textContent = "新しいレポジトリの作成";
+        document.getElementById("auth-subtitle").textContent = "レポジトリ名とマスターパスワードを設定してください。";
+        
+        document.getElementById("repo-select-view").style.display = "none";
+        document.getElementById("auth-form").style.display = "block";
+        document.getElementById("auth-error").style.display = "none";
+        
+        document.getElementById("login-repo-name-display").style.display = "none";
+        
+        const repos = SDR_RepoManager.getRepoList();
+        document.getElementById("login-back-btn-area").style.display = (showBackButton && repos.length > 0) ? "block" : "none";
+        
+        document.getElementById("setup-message-group").style.display = "block";
+        document.getElementById("repo-name-group").style.display = "block";
+        document.getElementById("password-confirm-group").style.display = "block";
+        
+        document.querySelector("#auth-submit-btn span").textContent = "レポジトリを生成する";
+        document.getElementById("repo-name-input").value = "";
+        document.getElementById("master-password").value = "";
+        document.getElementById("master-password-confirm").value = "";
+        document.getElementById("repo-name-input").focus();
+    },
+
+    async promptDeleteRepo(repo) {
+        // マスターパスワードの入力を要求
+        SDR_Modal.showInput(`「${repo.name}」の削除 - パスワード確認`, "", "マスターパスワードを入力", async (password) => {
+            const loadingEl = document.getElementById("loading-overlay");
+            loadingEl.style.display = "flex";
+            document.getElementById("loading-text").textContent = "検証中...";
+
+            try {
+                // 対象レポジトリのDBを一時的に開く
+                const tempDb = await new Promise((resolve, reject) => {
+                    const request = indexedDB.open(repo.dbName, 1);
+                    request.onerror = () => reject(new Error("データベースに接続できません。"));
+                    request.onsuccess = (e) => resolve(e.target.result);
+                    request.onupgradeneeded = (e) => {
+                        e.target.transaction.abort();
+                        reject(new Error("データベースが存在しません。"));
+                    };
+                });
+
+                // saltを取得
+                const saltRecord = await new Promise((resolve, reject) => {
+                    const req = tempDb.transaction(["app_settings"], "readonly").objectStore("app_settings").get("sdr_master_salt");
+                    req.onerror = () => reject(new Error("設定データの取得に失敗しました。"));
+                    req.onsuccess = (e) => resolve(e.target.result);
+                });
+
+                if (!saltRecord) {
+                    tempDb.close();
+                    throw new Error("設定データが存在しません。");
+                }
+
+                // パスワードから鍵を導出
+                const salt = SDR_Crypto.base64ToUint8Array(saltRecord.value);
+                const tempMasterKey = await SDR_Crypto.deriveMasterKey(password, salt);
+                const tempIndexKey = await SDR_Crypto.deriveIndexKey(tempMasterKey);
+
+                // インデックスを復号してパスワード検証 + 空チェック
+                const encryptedIndexData = await new Promise((resolve, reject) => {
+                    const req = tempDb.transaction(["app_index"], "readonly").objectStore("app_index").get("main_tree");
+                    req.onerror = () => reject(new Error("インデックスの取得に失敗しました。"));
+                    req.onsuccess = (e) => resolve(e.target.result?.data || null);
+                });
+
+                let treeNodes = [];
+                if (encryptedIndexData) {
+                    try {
+                        const decryptedBuffer = await SDR_Crypto.decryptBinary(encryptedIndexData, tempIndexKey);
+                        treeNodes = JSON.parse(new TextDecoder().decode(decryptedBuffer));
+                        new Uint8Array(decryptedBuffer).fill(0);
+                    } catch (_) {
+                        tempDb.close();
+                        throw new Error("マスターパスワードが正しくありません。");
+                    }
+                }
+
+                tempDb.close();
+
+                // レポジトリが空かチェック
+                if (treeNodes.length > 0) {
+                    showToast(`レポジトリ「${repo.name}」にはファイルやフォルダが存在するため削除できません。先にログインしてレポジトリ内のデータを全て削除してください。`, "error");
+                    return;
+                }
+
+                // 両条件クリア: 最終確認して削除実行
+                if (!confirm(`レポジトリ「${repo.name}」を完全に削除します。この操作は取り消せません。よろしいですか？`)) return;
+
+                SDR_RepoManager.removeRepo(repo.id);
+                showToast(`レポジトリ「${repo.name}」を削除しました。`, "success");
+                this.showAuthScreen();
+
+            } catch (err) {
+                showToast(err.message || "削除に失敗しました。", "error");
+            } finally {
+                loadingEl.style.display = "none";
+            }
+        }, null, true);
+    },
+
+    /* =============================================
+       イベントバインド
+       ============================================= */
     bindEvents() {
         document.getElementById("auth-form").addEventListener("submit", (e) => { e.preventDefault(); this.handleAuthSubmit(); });
         document.getElementById("logout-btn").addEventListener("click", () => this.logout());
@@ -1138,6 +2087,10 @@ const SDR_App = {
 
 	document.getElementById("header-backup-btn").addEventListener("click", () => this.exportBackup());
         
+        // レポジトリ選択画面のボタン
+        document.getElementById("btn-show-create-repo").addEventListener("click", () => this.showCreateForm(true));
+        document.getElementById("btn-back-to-repo-list").addEventListener("click", () => this.showAuthScreen());
+
         const helpModal = document.getElementById("help-modal");
         document.getElementById("help-btn").addEventListener("click", () => { if (helpModal) helpModal.style.display = "flex"; });
         document.getElementById("help-close-btn").addEventListener("click", () => { if (helpModal) helpModal.style.display = "none"; });
@@ -1161,10 +2114,61 @@ const SDR_App = {
             SDR_Tree.showRootContextMenu(rect.left, rect.bottom + 4);
         });
 
-        document.getElementById("tree-container").addEventListener("contextmenu", (e) => {
+        const treeContainerEl = document.getElementById("tree-container");
+        treeContainerEl.addEventListener("contextmenu", (e) => {
             if (!e.target.closest('.tree-node')) {
                 e.preventDefault();
                 SDR_Tree.showRootContextMenu(e.clientX, e.clientY);
+            }
+        });
+
+        // ツリー余白への外部ファイルD&D（ルートに追加）とノード移動
+        treeContainerEl.addEventListener("dragover", (e) => {
+            if (!e.target.closest('.tree-node')) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = "copy";
+            }
+        });
+        treeContainerEl.addEventListener("drop", (e) => {
+            if (e.target.closest('.tree-node')) return;
+            e.preventDefault();
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                this.handleExternalFileDrop(e.dataTransfer.files, null);
+            } else {
+                const dragNodeId = e.dataTransfer.getData("text/plain");
+                if (dragNodeId) {
+                    if (SDR_Tree.moveNode(dragNodeId, null)) SDR_Tree.render(treeContainerEl);
+                }
+            }
+        });
+
+        // グローバルショートカットとD&D
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                this.hideContextMenu();
+                SDR_Modal.hide();
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+                const saveBtn = document.getElementById("save-file-btn");
+                if (saveBtn && saveBtn.style.display !== "none" && !saveBtn.disabled) {
+                    e.preventDefault();
+                    saveBtn.click();
+                }
+            }
+        });
+
+        const appMain = document.querySelector(".app-main");
+        appMain.addEventListener("dragover", (e) => {
+            if (!e.target.closest('.tree-container')) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = "copy";
+            }
+        });
+        appMain.addEventListener("drop", (e) => {
+            if (e.target.closest('.tree-container')) return; // tree-container側で処理
+            e.preventDefault();
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                this.handleExternalFileDrop(e.dataTransfer.files, null);
             }
         });
 
@@ -1180,6 +2184,12 @@ const SDR_App = {
             e.stopPropagation(); 
             const targetId = document.getElementById("context-menu").dataset.targetId;
             this.promptCreateTextFile(targetId ? targetId : null);
+            this.hideContextMenu(); 
+        });
+        document.getElementById("cm-new-csv").addEventListener("click", (e) => { 
+            e.stopPropagation(); 
+            const targetId = document.getElementById("context-menu").dataset.targetId;
+            this.promptCreateCsvFile(targetId ? targetId : null);
             this.hideContextMenu(); 
         });
         document.getElementById("cm-rename").addEventListener("click", (e) => { e.stopPropagation(); this.promptRenameNode(document.getElementById("context-menu").dataset.targetId); this.hideContextMenu(); });
@@ -1203,9 +2213,20 @@ const SDR_App = {
             this.importNodeData(e, targetId); 
         });
         
-        SDR_Tree.onIndexChanged = async (nodes) => await this.saveIndex(nodes);
-        SDR_Tree.onFileSelect = async (fileId) => await this.loadFile(fileId);
-        SDR_Tree.onExternalFileDrop = async (files, parentId) => await this.handleExternalFileDrop(files, parentId);
+        SDR_Tree.onIndexChanged = async (nodes) => {
+            await this.saveIndex(nodes);
+            this.updateStorageUsage();
+        };
+        SDR_Tree.onFileSelect = async (fileId) => {
+            if (SDR_Editor.hasUnsavedChanges() && !confirm("保存されていない変更があります。破棄して別のファイルを開きますか？")) {
+                return;
+            }
+            await this.loadFile(fileId);
+        };
+        SDR_Tree.onExternalFileDrop = async (files, parentId) => {
+            await this.handleExternalFileDrop(files, parentId);
+            this.updateStorageUsage();
+        };
         SDR_Editor.onNameChangedInEditor = (fileId, newName) => { SDR_Tree.renameNode(fileId, newName); SDR_Tree.render(document.getElementById("tree-container")); };
 
         const filterInput = document.getElementById("tree-filter");
@@ -1222,6 +2243,8 @@ const SDR_App = {
                     if (!query) {
                         SDR_Tree.matchedIds = null;
                         SDR_Tree.render(document.getElementById("tree-container"));
+                        // ビューアが開いていてCSVなら再描画してハイライトを消す
+                        if (SDR_Editor.activeFileId) SDR_Editor.renderPreview();
                         return;
                     }
 
@@ -1243,7 +2266,6 @@ const SDR_App = {
                         filterInput.style.opacity = "0.6"; 
                         try {
                             for (let i = 0; i < textFiles.length; i++) {
-                                // 【修正】検索クエリが現在の入力値と変わっていたら処理を中断
                                 if (qLower !== filterInput.value.trim().toLowerCase()) break;
 
                                 const node = textFiles[i];
@@ -1273,6 +2295,11 @@ const SDR_App = {
 
                     SDR_Tree.matchedIds = matched;
                     SDR_Tree.render(document.getElementById("tree-container"));
+                    
+                    // 現在開いているのがCSVなら再描画してハイライトを適用
+                    if (SDR_Editor.activeFileId && SDR_Editor.activeFileName.toLowerCase().endsWith('.csv')) {
+                        SDR_Editor.renderPreview();
+                    }
                 }, 500); 
             });
         }
@@ -1280,6 +2307,7 @@ const SDR_App = {
             clearFilterBtn.addEventListener("click", () => {
                 filterInput.value = ""; SDR_Tree.filterQuery = ""; SDR_Tree.matchedIds = null; clearFilterBtn.style.display = "none";
                 SDR_Tree.render(document.getElementById("tree-container")); filterInput.focus();
+                if (SDR_Editor.activeFileId) SDR_Editor.renderPreview();
             });
         }
         
@@ -1288,7 +2316,6 @@ const SDR_App = {
     },
 
     promptCreateTextFile(parentId) {
-        // 【修正】名前が空の場合はデフォルト名を使用
         SDR_Modal.showInput("新規テキストファイル", "new_file.txt", "ファイル名を入力...", async (inputName) => {
             const name = inputName.trim() || "new_file.txt";
             if (!this.masterKey) return;
@@ -1308,6 +2335,36 @@ const SDR_App = {
                 await this.loadFile(newNode.id);
             } catch (err) {
                 showToast("ファイル作成に失敗しました", "error");
+                console.error(err);
+            } finally {
+                loadingEl.style.display = "none";
+            }
+        });
+    },
+
+    promptCreateCsvFile(parentId) {
+        SDR_Modal.showInput("新規CSVファイル", "new_data.csv", "ファイル名を入力...", async (inputName) => {
+            let name = inputName.trim() || "new_data.csv";
+            if (!name.toLowerCase().endsWith('.csv')) name += '.csv'; // 拡張子補完
+            
+            if (!this.masterKey) return;
+            const loadingEl = document.getElementById("loading-overlay");
+            loadingEl.style.display = "flex"; document.getElementById("loading-text").textContent = "作成中...";
+            try {
+                const metadata = { size: 0, mimeType: "text/csv" };
+                const newNode = SDR_Tree.createNode(parentId, "file", name, metadata);
+                
+                const fileKey = await SDR_Crypto.deriveFileKey(this.masterKey, newNode.id);
+                // 新規CSVは空文字列でも良いですが、エディタ側で自動的に空の表が生成されます
+                const emptyBuffer = new TextEncoder().encode("");
+                const encryptedBinary = await SDR_Crypto.encryptBinary(emptyBuffer, fileKey);
+                await SDR_DB.saveFile(newNode.id, encryptedBinary);
+                
+                SDR_Tree.render(document.getElementById("tree-container"));
+                SDR_Tree.activeNodeId = newNode.id; 
+                await this.loadFile(newNode.id);
+            } catch (err) {
+                showToast("CSVファイル作成に失敗しました", "error");
                 console.error(err);
             } finally {
                 loadingEl.style.display = "none";
@@ -1379,32 +2436,64 @@ const SDR_App = {
 
     async handleAuthSubmit() {
         const password = document.getElementById("master-password").value;
-        const passwordConfirm = document.getElementById("master-password-confirm").value;
-        let saltRecord = null;
-        try { saltRecord = await SDR_DB.getSetting("sdr_master_salt"); } catch(e) {}
-        const isNewSetup = !saltRecord;
         
-        if (isNewSetup && password !== passwordConfirm) return this.showAuthError("確認用パスワードが一致しません。");
-        if (isNewSetup && password.length < 8) return this.showAuthError("パスワードは8文字以上に設定してください。");
+        if (this.authMode === "create") {
+            // 新規レポジトリ作成フロー
+            const repoName = document.getElementById("repo-name-input").value.trim();
+            const passwordConfirm = document.getElementById("master-password-confirm").value;
+            
+            if (!repoName) return this.showAuthError("レポジトリ名を入力してください。");
+            if (password.length < 8) return this.showAuthError("パスワードは8文字以上に設定してください。");
+            if (password !== passwordConfirm) return this.showAuthError("確認用パスワードが一致しません。");
 
-        const loadingEl = document.getElementById("loading-overlay");
-        loadingEl.style.display = "flex"; document.getElementById("loading-text").textContent = "セキュアキーを処理中...";
-        await new Promise(r => setTimeout(r, 50));
-        
-        try {
-            let salt;
-            if (isNewSetup) {
-                salt = SDR_Crypto.generateRandomValues(16);
+            const loadingEl = document.getElementById("loading-overlay");
+            loadingEl.style.display = "flex"; document.getElementById("loading-text").textContent = "セキュアキーを処理中...";
+            await new Promise(r => setTimeout(r, 50));
+
+            try {
+                // レポジトリをレジストリに登録
+                const repo = SDR_RepoManager.addRepo(repoName);
+                this.activeRepo = repo;
+
+                // 新しいDBを初期化
+                await SDR_DB.init(repo.dbName);
+
+                const salt = SDR_Crypto.generateRandomValues(16);
                 await SDR_DB.saveSetting("sdr_master_salt", SDR_Crypto.uint8ArrayToBase64(salt));
-            } else {
-                salt = SDR_Crypto.base64ToUint8Array(saltRecord.value);
-            }
-            this.masterKey = await SDR_Crypto.deriveMasterKey(password, salt);
-            this.indexKey = await SDR_Crypto.deriveIndexKey(this.masterKey);
+                
+                this.masterKey = await SDR_Crypto.deriveMasterKey(password, salt);
+                this.indexKey = await SDR_Crypto.deriveIndexKey(this.masterKey);
+                await this.saveIndex([]);
+                SDR_Tree.init([]);
 
-            if (isNewSetup) {
-                await this.saveIndex([]); SDR_Tree.init([]);
-            } else {
+                SDR_Tree.render(document.getElementById("tree-container"));
+                this.enterApp();
+            } catch (err) {
+                this.showAuthError("レポジトリの作成に失敗しました。");
+                this.masterKey = null; this.indexKey = null;
+                console.error(err);
+            } finally {
+                loadingEl.style.display = "none";
+            }
+
+        } else if (this.authMode === "login") {
+            // 既存レポジトリへのログイン
+            if (!this.activeRepo) return this.showAuthError("レポジトリが選択されていません。");
+
+            const loadingEl = document.getElementById("loading-overlay");
+            loadingEl.style.display = "flex"; document.getElementById("loading-text").textContent = "セキュアキーを処理中...";
+            await new Promise(r => setTimeout(r, 50));
+
+            try {
+                await SDR_DB.init(this.activeRepo.dbName);
+                
+                const saltRecord = await SDR_DB.getSetting("sdr_master_salt");
+                if (!saltRecord) throw new Error("Salt not found");
+                
+                const salt = SDR_Crypto.base64ToUint8Array(saltRecord.value);
+                this.masterKey = await SDR_Crypto.deriveMasterKey(password, salt);
+                this.indexKey = await SDR_Crypto.deriveIndexKey(this.masterKey);
+
                 const encryptedIndexData = await SDR_DB.getIndex();
                 if (!encryptedIndexData) { SDR_Tree.init([]); }
                 else {
@@ -1413,18 +2502,33 @@ const SDR_App = {
                     SDR_Tree.init(JSON.parse(decryptedIndexStr));
                     new Uint8Array(decryptedIndexBuffer).fill(0);
                 }
+
+                SDR_Tree.render(document.getElementById("tree-container"));
+                this.enterApp();
+            } catch (err) {
+                this.showAuthError("マスターパスワードが正しくありません。");
+                this.masterKey = null; this.indexKey = null;
+                SDR_DB.closeDB();
+                console.error(err);
+            } finally {
+                loadingEl.style.display = "none";
             }
-            SDR_Tree.render(document.getElementById("tree-container"));
-            document.getElementById("auth-container").style.display = "none";
-            document.getElementById("app-container").style.display = "flex";
-            document.getElementById("master-password").value = "";
-            document.getElementById("master-password-confirm").value = "";
-        } catch (err) { 
-            this.showAuthError("マスターパスワードが正しくありません。"); 
-            this.masterKey = null; this.indexKey = null; 
-            console.error(err);
-        } 
-        finally { loadingEl.style.display = "none"; }
+        }
+    },
+
+    enterApp() {
+        document.getElementById("auth-container").style.display = "none";
+        document.getElementById("app-container").style.display = "flex";
+        document.getElementById("master-password").value = "";
+        document.getElementById("master-password-confirm").value = "";
+        document.getElementById("repo-name-input").value = "";
+        
+        // ヘッダーにレポジトリ名を表示
+        const repoNameEl = document.getElementById("header-repo-name");
+        if (this.activeRepo && repoNameEl) {
+            repoNameEl.textContent = this.activeRepo.name;
+            repoNameEl.title = this.activeRepo.name;
+        }
     },
 
     showAuthError(msg) { const el = document.getElementById("auth-error"); el.textContent = msg; el.style.display = "block"; },
@@ -1477,7 +2581,19 @@ const SDR_App = {
         else for (const child of SDR_Tree.nodes.filter(n => n.parentId === id)) await this.deleteNodeDataFromDB(child.id);
     },
     hideContextMenu() { const m = document.getElementById("context-menu"); if (m) m.style.display = "none"; },
-    logout() { location.reload(); },
+    
+    logout() { 
+        this.masterKey = null;
+        this.indexKey = null;
+        this.activeRepo = null;
+        SDR_DB.closeDB();
+        SDR_Editor.clear();
+        SDR_Tree.init([]);
+        
+        document.getElementById("app-container").style.display = "none";
+        document.getElementById("auth-container").style.display = "flex";
+        this.showAuthScreen();
+    },
 
     async exportBackup() {
         if (!this.masterKey) return;
@@ -1504,8 +2620,10 @@ const SDR_App = {
             const encTree = await SDR_Crypto.encryptBinary(new TextEncoder().encode(treeJsonStr), backupKey);
             const treeB64 = SDR_Crypto.uint8ArrayToBase64(encTree);
 
+            const repoName = this.activeRepo ? this.activeRepo.name : "default";
+
             const chunks = [];
-            chunks.push(`{\n  "version": "1.04",\n  "salt": "${SDR_Crypto.uint8ArrayToBase64(backupSalt)}",\n  "tree": "${treeB64}",\n  "files": [\n`);
+            chunks.push(`{\n  "version": "1.04",\n  "repoName": ${JSON.stringify(repoName)},\n  "salt": "${SDR_Crypto.uint8ArrayToBase64(backupSalt)}",\n  "tree": "${treeB64}",\n  "files": [\n`);
 
             const dbRecords = await SDR_DB.getAllFiles();
             const fileNodes = SDR_Tree.nodes.filter(n => n.type === "file");
@@ -1530,7 +2648,8 @@ const SDR_App = {
             const blob = new Blob(chunks, { type: "application/json" });
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
-            a.href = url; a.download = `sdr-backup-${new Date().getTime()}.json`;
+            const safeName = repoName.replace(/[^a-zA-Z0-9\u3040-\u309f\u30a0-\u30ff\u4e00-\u9faf_-]/g, '_');
+            a.href = url; a.download = `sdr-backup-${safeName}-${new Date().getTime()}.json`;
             document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
             showToast("バックアップが完了しました。", "success");
         } catch (err) { showToast(`バックアップ失敗: ${err.message}`, "error"); console.error(err); } 
@@ -1580,7 +2699,7 @@ const SDR_App = {
                 new Uint8Array(treeDecBuf).fill(0);
             } catch (_) { throw new Error("パスワードが違います。"); }
             
-            if (!confirm("⚠️ 既存のデータは全て上書きされます。よろしいですか？")) { if(callback) callback(); loadingEl.style.display = "none"; return; }
+            if (!confirm("⚠️ 現在のレポジトリの既存データは全て上書きされます。よろしいですか？")) { if(callback) callback(); loadingEl.style.display = "none"; return; }
             
             const currentSalt = await SDR_DB.getSetting("sdr_master_salt");
             const currentTheme = await SDR_DB.getSetting("sdr_theme");
@@ -1721,16 +2840,41 @@ const SDR_App = {
     },
 
     factoryReset() {
-        SDR_Modal.showInput("初期化確認", "", "現在のマスターパスワードを入力", async (pw) => {
+        if (!this.activeRepo) return showToast("レポジトリが選択されていません。", "error");
+        const repoName = this.activeRepo.name;
+        
+        SDR_Modal.showInput(`「${repoName}」の初期化確認`, "", "現在のマスターパスワードを入力", async (pw) => {
             try {
                 const saltRecord = await SDR_DB.getSetting("sdr_master_salt");
                 if (!saltRecord) return showToast("設定データが存在しません", "error");
                 const salt = SDR_Crypto.base64ToUint8Array(saltRecord.value);
-                const tempK = await SDR_Crypto.deriveMasterKey(pw, salt); 
-                if(!confirm("本当に全て削除しますか？")) return;
-                await SDR_DB.clearAll(); 
-                showToast("初期化完了", "success");
-                location.reload();
+                const tempMasterKey = await SDR_Crypto.deriveMasterKey(pw, salt);
+                
+                // 実際にインデックスを復号してパスワードを検証する
+                const tempIndexKey = await SDR_Crypto.deriveIndexKey(tempMasterKey);
+                const encryptedIndexData = await SDR_DB.getIndex();
+                if (encryptedIndexData) {
+                    // インデックスが存在する場合、復号を試みて検証
+                    await SDR_Crypto.decryptBinary(encryptedIndexData, tempIndexKey);
+                }
+                // 復号成功 = パスワード正しい
+                
+                if(!confirm(`本当に「${repoName}」を完全に削除しますか？`)) return;
+                
+                SDR_DB.closeDB();
+                SDR_RepoManager.removeRepo(this.activeRepo.id);
+                
+                showToast(`「${repoName}」を初期化しました。`, "success");
+                
+                this.masterKey = null;
+                this.indexKey = null;
+                this.activeRepo = null;
+                SDR_Editor.clear();
+                SDR_Tree.init([]);
+                
+                document.getElementById("app-container").style.display = "none";
+                document.getElementById("auth-container").style.display = "flex";
+                this.showAuthScreen();
             } catch(e) { showToast("パスワードが違います", "error"); }
         }, null, true);
     }
@@ -1815,16 +2959,8 @@ function initSplitter() {
     document.addEventListener("mouseup", () => { if (isDragging) { isDragging = false; splitter.classList.remove("dragging"); document.body.style.cursor = ""; } });
 }
 
-document.addEventListener("contextmenu", (e) => {
-    const menu = document.getElementById("context-menu");
-    if (menu.style.display === "block") {
-        const rect = menu.getBoundingClientRect();
-        const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-        if (rect.right > vw) menu.style.left = `${vw - rect.width - 10}px`;
-        if (rect.bottom > vh) menu.style.top = `${vh - rect.height - 10}px`;
-    }
-});
+/* contextmenuの画面端補正は showRootContextMenu / showContextMenu 内の
+   requestAnimationFrame で実施済みのため、旧リスナーは不要 */
 
 window.addEventListener("DOMContentLoaded", () => { SDR_App.init(); });
 </script>
